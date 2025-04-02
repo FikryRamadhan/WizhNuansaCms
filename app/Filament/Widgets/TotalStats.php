@@ -2,14 +2,12 @@
 
 namespace App\Filament\Widgets;
 
-use Filament\Widgets\ChartWidget;
+use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
-class StatsOverview extends ChartWidget
+class TotalStat extends BaseWidget
 {
-    protected static ?string $heading = 'Chart';
-
-    protected function getData(): array
+    protected function getStats(): array
     {
         return [
             Stat::make('Total Penduduk', '5.096 Orang')
@@ -26,10 +24,5 @@ class StatsOverview extends ChartWidget
                 ->chart([2, 3, 10, 13, 6, 4, 2])
                 ->color('danger'),
         ];
-    }
-
-    protected function getType(): string
-    {
-        return 'scatter';
     }
 }

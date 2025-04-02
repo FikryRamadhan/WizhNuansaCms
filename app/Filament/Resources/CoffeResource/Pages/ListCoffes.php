@@ -10,6 +10,8 @@ class ListCoffes extends ListRecords
 {
     protected static string $resource = CoffeResource::class;
 
+    protected static ?string $breadcrumb = "Data Coffe & Resto";
+
     protected function getHeaderActions(): array
     {
         return [

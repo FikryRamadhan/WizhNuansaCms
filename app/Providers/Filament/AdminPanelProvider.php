@@ -2,10 +2,14 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\ChangePassword;
+use App\Filament\Pages\EditProfile;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -20,6 +24,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AdminPanelProvider extends PanelProvider
 {
+    // protected static ?string $panel = ""
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -28,9 +33,11 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->profile()
+            ->passwordReset(ChangePassword::class)
             ->colors([
                 'primary' => Color::Teal,
             ])
+
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -39,7 +46,15 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                \App\Filament\Widgets\StatsOverview::class
+                \App\Filament\Widgets\TotalStat::class
+            ])
+
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Ubah Password')
+                    ->url(fn (): string => ChangePassword::getUrl())
+                    ->icon('heroicon-o-cog-6-tooth'),
+                // ...
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -54,6 +69,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            // ->databaseNotifications()
+            // ->databaseNotificationsPolling('30s')
+            ->collapsibleNavigationGroups(true);
     }
 }

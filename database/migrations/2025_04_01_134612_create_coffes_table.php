@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("description")->nullable();
             $table->string("category")->nullable();
             $table->text("address")->nullable();
-            $table->integer("contact")->nullable();
+            $table->string("contact")->nullable();
             $table->time("opened")->nullable();
             $table->time("closed")->nullable();
             $table->text("image")->nullable();
