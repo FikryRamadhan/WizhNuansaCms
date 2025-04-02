@@ -70,32 +70,32 @@ class ChangePassword extends Page
             ->statePath('data'); // Menyimpan data form
     }
 
-    public function save()
-    {
-        try {
-            $user = Auth::user();
+    // public function save()
+    // {
+    //     try {
+    //         $user = Auth::user();
 
-            // Validasi data input
-            $validatedData = $this->validate([
-                'current_password' => 'required|current_password',
-                'new_password' => 'required|min:8|confirmed',
-            ]);
+    //         // Validasi data input
+    //         $validatedData = $this->validate([
+    //             'current_password' => 'required|current_password',
+    //             'new_password' => 'required|min:8|confirmed',
+    //         ]);
 
-            // Update password
-            $user->update([
-                'password' => Hash::make($validatedData['new_password']),
-            ]);
+    //         // Update password
+    //         $user->update([
+    //             'password' => Hash::make($validatedData['new_password']),
+    //         ]);
 
-            // Notifikasi sukses
-            Notification::make()
-                ->title('Password berhasil diubah!')
-                ->success()
-                ->send();
-        } catch (Exception $e) {
-            Notification::make()
-                ->title('Error Ada Kesalahan')
-                ->warning()
-                ->send();
-        }
-    }
+    //         // Notifikasi sukses
+    //         Notification::make()
+    //             ->title('Password berhasil diubah!')
+    //             ->success()
+    //             ->send();
+    //     } catch (Exception $e) {
+    //         Notification::make()
+    //             ->title('Error Ada Kesalahan')
+    //             ->warning()
+    //             ->send();
+    //     }
+    // }
 }
