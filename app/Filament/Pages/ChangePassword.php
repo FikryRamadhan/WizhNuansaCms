@@ -2,16 +2,11 @@
 
 namespace App\Filament\Pages;
 
-use Dotenv\Exception\ValidationException;
-use Exception;
 use Filament\Forms;
 use Filament\Forms\Components\Card;
 use Filament\Forms\Form;
-use Filament\Livewire\Notifications;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Filament\Notifications\Notification;
 use Illuminate\Validation\ValidationException as ValidationValidationException;
 
 class ChangePassword extends Page
