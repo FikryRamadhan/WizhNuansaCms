@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string("name")->nullable();
             $table->string("description")->nullable();
             $table->text("address")->nullable();
-            $table->integer("contact")->nullable();
+            $table->string("contact")->nullable();
             $table->time("opened")->nullable();
             $table->time("closed")->nullable();
-            $table->text("image")->nullable();
+            $table->string("image")->nullable();
             $table->decimal("longtitude")->nullable();
             $table->string("latitude")->nullable();
             $table->bigInteger("price")->nullable();

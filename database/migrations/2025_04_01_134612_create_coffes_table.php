@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string("contact")->nullable();
             $table->time("opened")->nullable();
             $table->time("closed")->nullable();
-            $table->text("image")->nullable();
+            $table->string("image")->nullable();
             $table->decimal("longtitude")->nullable();
             $table->string("latitude")->nullable();
             $table->string("menus")->nullable();
