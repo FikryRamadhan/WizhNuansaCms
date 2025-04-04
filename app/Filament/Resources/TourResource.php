@@ -108,9 +108,10 @@ class TourResource extends Resource
                             ->seconds(false)
                             ->required(false),
 
-                        TextInput::make('price')
+                        MoneyInput::make('price')
                             ->label('Harga')
-
+                            ->currency('IDR')
+                            ->locale('id_ID')
                             ->minValue(100)
                             ->formatStateUsing(function ($state) {
                                 return NumberFormatter::create('id_ID', NumberFormatter::CURRENCY)
@@ -142,8 +143,12 @@ class TourResource extends Resource
                 TextColumn::make("name")
                     ->label('Nama Wisata'),
 
-                TextColumn::make("name")
-                    ->label("Nama")
+                TextColumn::make("price")
+                    ->label("Harga")
+                    ->formatStateUsing(function ($state) {
+                        return NumberFormatter::create('id_ID', NumberFormatter::CURRENCY)->format($state * 1000);
+                    })
+                    ->sortable()
                     ->sortable()
                     ->searchable(),
 

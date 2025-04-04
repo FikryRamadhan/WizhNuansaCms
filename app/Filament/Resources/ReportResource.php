@@ -6,6 +6,7 @@ use App\Filament\Resources\ReportResource\Pages;
 use App\Filament\Resources\ReportResource\RelationManagers;
 use App\Models\Report;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -29,7 +30,7 @@ class ReportResource extends Resource
     {
         return $form
             ->schema([
-                //
+
             ]);
     }
 
