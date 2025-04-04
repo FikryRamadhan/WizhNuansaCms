@@ -59,6 +59,7 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-cog-6-tooth'),
                 // ...
             ])
+            ->brandName('Wizh Nuansa App')
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

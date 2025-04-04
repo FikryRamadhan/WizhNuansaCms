@@ -18,6 +18,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup as ActionsActionGroup;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -98,9 +99,9 @@ class TourResource extends Resource
                     ->columns(3)
                     ->schema([
                         TimePicker::make('opened')
-                        ->label("Jam Buka")
-                        ->seconds(false)
-                        ->required(false),
+                            ->label("Jam Buka")
+                            ->seconds(false)
+                            ->required(false),
 
                         TimePicker::make('closed')
                             ->label("Jam Tutup")
@@ -119,7 +120,7 @@ class TourResource extends Resource
                                 return (float) $state / 100000;
                             }),
 
-                            FileUpload::make("image")
+                        FileUpload::make("image")
                             ->label("Gambar")
                             ->columnSpan(3)
                             ->downloadable()
@@ -141,7 +142,7 @@ class TourResource extends Resource
                 TextColumn::make("name")
                     ->label('Nama Wisata'),
 
-                    TextColumn::make("name")
+                TextColumn::make("name")
                     ->label("Nama")
                     ->sortable()
                     ->searchable(),
@@ -157,7 +158,72 @@ class TourResource extends Resource
                     ->limit(10),
             ])
             ->filters([
-                //
+                // Filter Rentang Harga
+                Tables\Filters\Filter::make('price')
+                    ->label('Rentang Harga')
+                    ->query(
+                        fn(Builder $query, array $data) =>
+                        $query->when($data['min'] ?? null, fn($q, $min) => $q->where('price', '>=', $min))
+                            ->when($data['max'] ?? null, fn($q, $max) => $q->where('price', '<=', $max))
+                    )
+                    ->form([
+                        Forms\Components\TextInput::make('min')
+                            ->numeric()
+                            ->label('Harga Minimal')
+                            ->placeholder('Rp 0'),
+                        Forms\Components\TextInput::make('max')
+                            ->numeric()
+                            ->label('Harga Maksimal')
+                            ->placeholder('Rp 1.000.000')
+                    ]),
+
+                // Filter Berdasarkan Waktu Buka & Tutup
+                Tables\Filters\Filter::make('opened')
+                    ->label('Jam Buka')
+                    ->query(
+                        fn(Builder $query, array $data) =>
+                        $query->when(
+                            $data['opened'] ?? null,
+                            fn($q, $opened) =>
+                            $q->where('opened', '>=', $opened)
+                        )
+                    )
+                    ->form([
+                        Forms\Components\TimePicker::make('opened')
+                            ->label('Jam Buka')
+                    ]),
+
+                Tables\Filters\Filter::make('closed')
+                    ->label('Jam Tutup')
+                    ->query(
+                        fn(Builder $query, array $data) =>
+                        $query->when(
+                            $data['closed'] ?? null,
+                            fn($q, $closed) =>
+                            $q->where('closed', '<=', $closed)
+                        )
+                    )
+                    ->form([
+                        Forms\Components\TimePicker::make('closed')
+                            ->label('Jam Tutup')
+                    ]),
+
+                // Filter Berdasarkan Lokasi (Bisa untuk cari di daerah tertentu)
+                Tables\Filters\Filter::make('address')
+                    ->label('Lokasi')
+                    ->query(
+                        fn(Builder $query, array $data) =>
+                        $query->when(
+                            $data['address'] ?? null,
+                            fn($q, $address) =>
+                            $q->where('address', 'like', "%{$address}%")
+                        )
+                    )
+                    ->form([
+                        Forms\Components\TextInput::make('address')
+                            ->label('Cari Lokasi')
+                            ->placeholder('Masukkan alamat/kecamatan')
+                    ]),
             ])
             ->actions([
                 ActionsActionGroup::make([
