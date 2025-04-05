@@ -19,9 +19,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     });
 
     // Api For Wisata
-    // Route::prefix('wisata')->group(function () {
-    //     Route::get('/{id}', function (string $id) {
-    //         return new User(ModelsUser::findOrFail($id));
-    //     });
-    // });
+    Route::prefix('wisata')->group(function () {
+        // Route::get('/{id}', function (string $id) {
+        //     return new User(ModelsUser::findOrFail($id));
+        // });
+        Route::get('/', function () {
+            return ModelsUser::all();
+        });
+    });
 });

@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\Pages\ChangePassword;
 use App\Filament\Pages\EditProfile;
 use App\Filament\Widgets\DashboardStats as WidgetsDashboardStats;
+use App\Http\Middleware\AdminMiddleware;
 use DashboardStats;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -27,7 +28,8 @@ use TotalStat;
 
 class AdminPanelProvider extends PanelProvider
 {
-    // protected static ?string $panel = ""
+
+
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -51,7 +53,6 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 WidgetsDashboardStats::class
             ])
-
             ->userMenuItems([
                 MenuItem::make()
                     ->label('Ubah Password')
@@ -74,6 +75,7 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
+            ->canA
             // ->databaseNotifications()
             // ->databaseNotificationsPolling('30s')
             ->collapsibleNavigationGroups(true);
