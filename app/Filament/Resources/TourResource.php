@@ -236,6 +236,10 @@ class TourResource extends Resource
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\DeleteAction::make()
                 ])
+                ->icon('heroicon-o-cog-6-tooth')
+                ->label('Aksi')
+                ->color('primary')
+                ->tooltip('Aksi')
             ])
             ->bulkActions([
                 Tables\Actions\ActionGroup::make([

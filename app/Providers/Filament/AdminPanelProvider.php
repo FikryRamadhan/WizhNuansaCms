@@ -75,7 +75,6 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->canA
             // ->databaseNotifications()
             // ->databaseNotificationsPolling('30s')
             ->collapsibleNavigationGroups(true);
