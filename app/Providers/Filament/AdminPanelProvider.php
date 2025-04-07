@@ -6,6 +6,7 @@ use App\Filament\Pages\ChangePassword;
 use App\Filament\Pages\EditProfile;
 use App\Filament\Widgets\DashboardStats as WidgetsDashboardStats;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\EnsureUserIsAdmin;
 use DashboardStats;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -24,6 +25,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Spatie\Permission\Middleware\RoleMiddleware;
 use TotalStat;
 
 class AdminPanelProvider extends PanelProvider
@@ -71,8 +73,10 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                // RoleMiddleware::using('admin'),
             ])
             ->authMiddleware([
+                // RoleMiddleware::using('admin'),
                 Authenticate::class,
             ])
             // ->databaseNotifications()
