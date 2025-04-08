@@ -1,0 +1,149 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Tour API Documentation",
+        "description": "API documentation for the Tour endpoints",
+        "contact": {
+            "email": "you@example.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/tours": {
+            "get": {
+                "tags": [
+                    "Tours"
+                ],
+                "summary": "Get all tours",
+                "operationId": "0e5f396c3f9e5f094223a808680719e6",
+                "responses": {
+                    "200": {
+                        "description": "List of all tours",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "tours": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/components/schemas/Tour"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No tours found"
+                    }
+                }
+            }
+        },
+        "/api/tours/{id}": {
+            "get": {
+                "tags": [
+                    "Tours"
+                ],
+                "summary": "Get a specific tour",
+                "operationId": "f5e0637f8d4f8a179689782c6dbb75a1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details of a tour",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "tour": {
+                                                    "$ref": "#/components/schemas/Tour"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tour not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Tour": {
+                "title": "Tour",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Bali Adventure"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "An amazing trip to Bali."
+                    },
+                    "price": {
+                        "type": "number",
+                        "format": "float",
+                        "example": 500
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Tours",
+            "description": "Tours"
+        }
+    ]
+}

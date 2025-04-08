@@ -127,7 +127,7 @@ class UserResource extends Resource
                     ->sortable(),
             ])
             ->filters([
-                //
+
             ])
             ->actions([
                 ActionGroup::make([

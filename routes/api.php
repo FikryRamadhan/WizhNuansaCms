@@ -10,21 +10,13 @@ Route::post('register', [\App\Http\Controllers\Api\AuthController::class, 'regis
 Route::post('logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    // Api For Users
-    Route::prefix('users')->group(function () {
-        Route::get('/{id}', function (string $id) {
-            return new User(ModelsUser::findOrFail($id));
-        });
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('user', function (Request $request) {
+        return new User($request->user());
     });
 
-    // Api For Wisata
-    Route::prefix('wisata')->group(function () {
-        // Route::get('/{id}', function (string $id) {
-        //     return new User(ModelsUser::findOrFail($id));
-        // });
-        Route::get('/', function () {
-            return ModelsUser::all();
-        });
-    });
 });
+Route::prefix('tours')->group(function () {
+     Route::get('/', [\App\Http\Controllers\Api\TourController::class, 'index']);
+     Route::get('/{tour}', [\App\Http\Controllers\Api\TourController::class, 'show']);
+ });

@@ -15,7 +15,7 @@ class EnsureUserIsAdmin
         // Cek apakah user tidak punya role admin
         if (!$user || !$user->hasRole('admin')) {
             Auth::logout();
-            return redirect()->route('filament.admin.pages.dashboard')
+            return redirect()->route('filament.admin.auth.login')
                 ->with('message', 'Akses hanya untuk admin.');
         }
 
