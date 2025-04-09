@@ -15,8 +15,17 @@ Route::middleware('auth:sanctum')->group(function () {
         return new User($request->user());
     });
 
+    Route::prefix('tours')->group(function () {
+         Route::get('/', [\App\Http\Controllers\Api\TourController::class, 'index']);
+         Route::get('/{tour}', [\App\Http\Controllers\Api\TourController::class, 'show']);
+     });
+
+    Route::prefix('coffes')->group(function () {
+         Route::get('/', [\App\Http\Controllers\Api\CoffeController::class, 'index']);
+     });
+
+    Route::prefix('reports')->group(function () {
+         Route::get('/', [\App\Http\Controllers\Api\ReportController::class, 'index']);
+         Route::get('/{report}', [\App\Http\Controllers\Api\ReportController::class, 'show']);
+     });
 });
-Route::prefix('tours')->group(function () {
-     Route::get('/', [\App\Http\Controllers\Api\TourController::class, 'index']);
-     Route::get('/{tour}', [\App\Http\Controllers\Api\TourController::class, 'show']);
- });
